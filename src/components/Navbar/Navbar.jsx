@@ -1,19 +1,50 @@
 import React from "react";
-import { Container, Typography, Grid } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  AppBar,
+  Toolbar,
+  makeStyles,
+  Button,
+} from "@material-ui/core";
+
+const useStyles = makeStyles({
+  navbar: {
+    backgroundColor: "#4E878C",
+  },
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonContainer: {
+    margin: "0px 5px",
+    fontSize: "11px",
+  },
+});
 
 const Navbar = () => {
+  const classes = useStyles();
   return (
-    <Grid alignItems="center" justify="center">
-      <Typography>BLOGIT</Typography>
-      <Grid>
-        <Container>
-          <Typography>Sign In</Typography>
-        </Container>
-        <Container>
-          <Typography>Sign Up</Typography>
-        </Container>
-      </Grid>
-    </Grid>
+    <AppBar position="static" className={classes.navbar}>
+      <Toolbar>
+        <Grid container className={classes.container}>
+          <Grid item xs={8} className={classes.container}>
+            <Typography style={{ fontSize: "2rem" }} align="center">
+              BlogIn
+            </Typography>
+          </Grid>
+          <Grid item xs={4} className={classes.container}>
+            <Button className={classes.buttonContainer} variant="outlined">
+              SignIn
+            </Button>
+            <Button className={classes.buttonContainer} variant="outlined">
+              SignOut
+            </Button>
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   );
 };
 
