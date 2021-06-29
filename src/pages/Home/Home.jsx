@@ -9,13 +9,13 @@ import {
 } from "@material-ui/core";
 import blogImg from "../../assets/blogging.svg";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   heroContainer: {
     display: "flex",
     padding: "30px",
     alignItems: "center",
     justifyContent: "space-between",
-    [theme.breakpoints.down("sm")]: {
+    "@media screen and (max-width:800px)": {
       justifyContent: "center",
       margin: "12vh auto",
     },
@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
   heroImg: {
     width: "50vw",
     height: "80vh",
-    [theme.breakpoints.down("sm")]: {
+    "@media screen and (max-width:800px)": {
       display: "none",
     },
   },
-}));
+});
 
 const Home = () => {
   const classes = useStyles();
@@ -70,7 +70,7 @@ const Home = () => {
             variant="outlined"
             color="secondary"
           >
-            Use For Free
+            Get Started
           </Button>
         </Grid>
         <Grid item className={classes.heroImgContainer}>
