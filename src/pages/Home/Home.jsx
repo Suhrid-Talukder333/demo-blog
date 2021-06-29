@@ -66,7 +66,7 @@ const Home = () => {
             heart's content and show your creativity to the world.
           </Typography>
           <Button
-            style={{ maxWidth: "200px" }}
+            style={{ maxWidth: "200px", marginTop: "20px" }}
             variant="outlined"
             color="secondary"
           >

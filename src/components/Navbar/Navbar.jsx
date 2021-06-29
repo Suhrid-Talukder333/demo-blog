@@ -39,10 +39,18 @@ const Navbar = () => {
             </Typography>
           </Grid>
           <Grid item xs={4} className={classes.container}>
-            <Button className={classes.buttonContainer} variant="outlined">
+            <Button
+              href="/signin"
+              className={classes.buttonContainer}
+              variant="outlined"
+            >
               SignIn
             </Button>
-            <Button className={classes.buttonContainer} variant="outlined">
+            <Button
+              href="/signin"
+              className={classes.buttonContainer}
+              variant="outlined"
+            >
               SignOut
             </Button>
           </Grid>
