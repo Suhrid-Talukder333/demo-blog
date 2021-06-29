@@ -1,13 +1,18 @@
 import React from "react";
 import Home from "./pages/Home/Home";
-import { CssBaseline } from "@material-ui/core";
+import SignIn from "./pages/SignIn/SignIn";
+import { Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <React.Fragment>
-      <Home />
-      <CssBaseline />
-    </React.Fragment>
+    <Switch>
+      <Route exact path="/">
+        <Home />
+      </Route>
+      <Route path="/signin">
+        <SignIn />
+      </Route>
+    </Switch>
   );
 }
 

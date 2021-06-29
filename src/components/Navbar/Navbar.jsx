@@ -20,6 +20,10 @@ const useStyles = makeStyles({
   buttonContainer: {
     margin: "0px 5px",
     fontSize: "11px",
+    "&:hover": {
+      color: "white",
+      backgroundColor: "black",
+    },
   },
 });
 
@@ -31,7 +35,7 @@ const Navbar = () => {
         <Grid container className={classes.container}>
           <Grid item xs={8} className={classes.container}>
             <Typography style={{ fontSize: "2rem" }} align="center">
-              BlogIn
+              BlogIN
             </Typography>
           </Grid>
           <Grid item xs={4} className={classes.container}>
