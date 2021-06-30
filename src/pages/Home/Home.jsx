@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import Navbar from "../../components/Navbar/Navbar";
 import {
   Grid,
@@ -41,7 +42,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Home = () => {
+const Home = ({ state }) => {
   const classes = useStyles();
   return (
     <Grid container>
@@ -66,7 +67,8 @@ const Home = () => {
             heart's content and show your creativity to the world.
           </Typography>
           <Button
-            style={{ maxWidth: "200px" }}
+            href={state.isLoggedIn === true ? "/blogs" : "/signin"}
+            style={{ maxWidth: "200px", marginTop: "20px" }}
             variant="outlined"
             color="secondary"
           >
@@ -81,4 +83,8 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return { state };
+};
+
+export default connect(mapStateToProps, null)(Home);

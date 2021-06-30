@@ -1,13 +1,11 @@
 import React, { useState } from "react";
+import { signIn, signUp } from "../../redux/mainReducer";
 import { connect } from "react-redux";
 import {
   Avatar,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
-  Grid,
   Box,
   Typography,
   makeStyles,
@@ -20,7 +18,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        BlogIN
       </Link>
       {new Date().getFullYear()}
     </Typography>
@@ -47,12 +45,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignIn({ state }) {
+function SignIn({ state, userSignIn, userSignUp, history }) {
+  const [credentials, setCredentials] = useState({ name: "", email: "" });
+
+  //save state with respect to input change
+  const handleChange = (e) => {
+    setCredentials({ ...credentials, [e.target.id]: e.target.value });
+    console.log(credentials);
+  };
+
+  //utility
   const classes = useStyles();
 
-  const handleSignIn = () => {};
-
-  const handleSignUp = () => {};
+  //login and sign in submition handlers
+  const handleSignIn = () => {
+    state.users.map((user) => {
+      if (user.name == credentials.name) {
+        userSignIn(credentials);
+        window.location.href = "http://localhost:3000/blogs";
+      }
+    });
+    alert("User Not Found");
+  };
+  const handleSignUp = () => {
+    let found = false;
+    state.users.map((user) => {
+      if (user.name == credentials.name) {
+        found = true;
+      }
+    });
+    if (!found) {
+      userSignUp(credentials);
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -75,6 +100,7 @@ function SignIn({ state }) {
             id="name"
             autoComplete="name"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -85,9 +111,10 @@ function SignIn({ state }) {
             label="Email Address"
             name="email"
             autoComplete="email"
+            onChange={handleChange}
           />
           <Button
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             color="primary"
@@ -97,7 +124,7 @@ function SignIn({ state }) {
             Sign In
           </Button>
           <Button
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             color="secondary"
@@ -106,18 +133,6 @@ function SignIn({ state }) {
           >
             Sign Up
           </Button>
-          {/* <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid> */}
         </form>
       </div>
       <Box mt={8}>
@@ -131,4 +146,11 @@ const mapStateToProps = (state) => {
   return { state };
 };
 
-export default connect(mapStateToProps, null)(SignIn);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userSignIn: (item) => dispatch(signIn(item)),
+    userSignUp: (item) => dispatch(signUp(item)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
