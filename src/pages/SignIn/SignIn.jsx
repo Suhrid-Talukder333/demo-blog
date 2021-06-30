@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { signIn, signUp } from "../../redux/mainReducer";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Avatar,
@@ -18,7 +19,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        BlogIN
       </Link>
       {new Date().getFullYear()}
     </Typography>
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignIn({ state, userSignIn, userSignUp }) {
+function SignIn({ state, userSignIn, userSignUp, history }) {
   const [credentials, setCredentials] = useState({ name: "", email: "" });
 
   //save state with respect to input change
@@ -59,15 +60,18 @@ function SignIn({ state, userSignIn, userSignUp }) {
 
   //login and sign in submition handlers
   const handleSignIn = () => {
-    state.users.map((user) => {
-      if (user.name == credentials.name) {
-        console.log("found");
-      }
-    });
     // userSignIn(credentials);
   };
   const handleSignUp = () => {
-    userSignUp(credentials);
+    let found = false;
+    state.users.map((user) => {
+      if (user.name == credentials.name) {
+        found = true;
+      }
+    });
+    if (!found) {
+      userSignUp(credentials);
+    }
     console.log(state.users);
   };
 

@@ -38,14 +38,26 @@ export const signUp = (item) => ({
 });
 
 //state
-export const initial_state = {
-  data: [],
-  user: { name: "", email: "" },
-  users: [],
-  isLoggedIn: false,
-};
+let initial_state;
+if (localStorage.getItem("state")) {
+  initial_state = JSON.parse(localStorage.getItem("state"));
+} else {
+  initial_state = {
+    data: [],
+    user: { name: "", email: "" },
+    users: [],
+    isLoggedIn: false,
+  };
+}
 
 //Utitlity functions
+const init_state = () => {
+  if (localStorage.getItem("state")) {
+    return JSON.parse(localStorage.getItem("state"));
+  } else {
+    return initial_state;
+  }
+};
 const isUserSignedUp = (item) => {};
 const addNewUser = (item, users) => {
   const newUser = {
@@ -62,13 +74,27 @@ const reducer = (state = initial_state, action) => {
     case DELETE_POST:
     case UPDATE_POST:
     case SIGN_IN:
-      return { ...state, user: action.payload };
+      state = init_state();
+      state = { ...state, user: { ...action.payload } };
+      localStorage.setItem("state", JSON.stringify(state));
+      return state;
     case GET_POSTS:
-      return { ...state, data: [...action.payload] };
+      state = init_state();
+      state = { ...state, data: [...action.payload] };
+      localStorage.setItem("state", JSON.stringify(state));
+      return state;
     case GET_USERS:
-      return { ...state, users: [...action.payload] };
+      state = init_state();
+      state = { ...state, users: [...action.payload] };
+      localStorage.setItem("state", JSON.stringify(state));
+      return state;
     case SIGN_UP:
-      return (state.users = addNewUser(action.payload, state.users));
+      state = init_state();
+      const newUsers = addNewUser(action.payload, state.users);
+      console.log(newUsers, "newUsers");
+      state = { ...state, users: newUsers };
+      localStorage.setItem("state", JSON.stringify(state));
+      return state;
     default:
       return state;
   }

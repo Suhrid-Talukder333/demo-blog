@@ -11,19 +11,25 @@ import { getPosts, getUsers } from "./redux/mainReducer";
 const store = createStore(reducer);
 
 //fetch post data and users from https://jsonplaceholder.typicode.com/
-const data = async () => {
-  const fetchedData = await fetch("https://jsonplaceholder.typicode.com/posts");
-  const jsonData = await fetchedData.json();
-  store.dispatch(getPosts(jsonData));
-};
-const users = async () => {
-  const fetchUsers = await fetch("https://jsonplaceholder.typicode.com/users");
-  const jsonUsers = await fetchUsers.json();
-  store.dispatch(getUsers(jsonUsers));
-};
+if (!localStorage.getItem("state")) {
+  const data = async () => {
+    const fetchedData = await fetch(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
+    const jsonData = await fetchedData.json();
+    store.dispatch(getPosts(jsonData));
+  };
+  const users = async () => {
+    const fetchUsers = await fetch(
+      "https://jsonplaceholder.typicode.com/users"
+    );
+    const jsonUsers = await fetchUsers.json();
+    store.dispatch(getUsers(jsonUsers));
+  };
 
-data();
-users();
+  data();
+  users();
+}
 
 ReactDOM.render(
   <BrowserRouter>
