@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { signIn, signUp } from "../../redux/mainReducer";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Avatar,
@@ -60,7 +59,13 @@ function SignIn({ state, userSignIn, userSignUp, history }) {
 
   //login and sign in submition handlers
   const handleSignIn = () => {
-    // userSignIn(credentials);
+    state.users.map((user) => {
+      if (user.name == credentials.name) {
+        userSignIn(credentials);
+        window.location.href = "http://localhost:3000/blogs";
+      }
+    });
+    alert("User Not Found");
   };
   const handleSignUp = () => {
     let found = false;
@@ -72,7 +77,6 @@ function SignIn({ state, userSignIn, userSignUp, history }) {
     if (!found) {
       userSignUp(credentials);
     }
-    console.log(state.users);
   };
 
   return (

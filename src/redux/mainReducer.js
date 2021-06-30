@@ -6,6 +6,7 @@ const SIGN_IN = "SIGN_IN";
 const SIGN_UP = "SIGN_UP";
 const GET_POSTS = "GET_POSTS";
 const GET_USERS = "GET_USERS";
+const SIGN_OUT = "SIGN_OUT";
 
 //Actions
 export const createPost = (item) => ({
@@ -36,6 +37,9 @@ export const signUp = (item) => ({
   type: SIGN_UP,
   payload: item,
 });
+export const signOut = () => ({
+  type: SIGN_OUT,
+});
 
 //state
 let initial_state;
@@ -58,7 +62,6 @@ const init_state = () => {
     return initial_state;
   }
 };
-const isUserSignedUp = (item) => {};
 const addNewUser = (item, users) => {
   const newUser = {
     id: users.length + 1,
@@ -75,7 +78,7 @@ const reducer = (state = initial_state, action) => {
     case UPDATE_POST:
     case SIGN_IN:
       state = init_state();
-      state = { ...state, user: { ...action.payload } };
+      state = { ...state, user: { ...action.payload }, isLoggedIn: true };
       localStorage.setItem("state", JSON.stringify(state));
       return state;
     case GET_POSTS:
@@ -93,6 +96,15 @@ const reducer = (state = initial_state, action) => {
       const newUsers = addNewUser(action.payload, state.users);
       console.log(newUsers, "newUsers");
       state = { ...state, users: newUsers };
+      localStorage.setItem("state", JSON.stringify(state));
+      return state;
+    case SIGN_OUT:
+      state = init_state();
+      state = {
+        ...state,
+        user: { name: "", email: "" },
+        isLoggedIn: false,
+      };
       localStorage.setItem("state", JSON.stringify(state));
       return state;
     default:
