@@ -54,7 +54,10 @@ const Navbar = ({ state, logOut }) => {
       <Toolbar>
         <Grid container className={classes.container}>
           <Grid item xs={8} className={classes.container}>
-            <Typography style={{ fontSize: "2rem" }} align="center">
+            <Typography
+              style={{ fontSize: "2rem", letterSpacing: "3px" }}
+              align="center"
+            >
               BlogIN
             </Typography>
           </Grid>
@@ -65,7 +68,7 @@ const Navbar = ({ state, logOut }) => {
                 className={classes.buttonContainer}
                 variant="outlined"
               >
-                SignIn
+                Sign In
               </Button>
               {/* <Button
               href="/signin"
@@ -77,6 +80,13 @@ const Navbar = ({ state, logOut }) => {
             </Grid>
           ) : (
             <Grid item>
+              <Button
+                style={{ color: "black", backgroundColor: "white" }}
+                className={classes.buttonContainer}
+                variant="outlined"
+              >
+                Create Post
+              </Button>
               <Button style={{ color: "white" }}>
                 <AccountCircleIcon
                   style={{ width: "2rem", height: "2rem" }}
@@ -91,8 +101,8 @@ const Navbar = ({ state, logOut }) => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>My Posts</MenuItem>
-                <MenuItem onClick={handleClose}>Liked Post</MenuItem>
-                <MenuItem onClick={handleClose}>Disliked Post</MenuItem>
+                <MenuItem onClick={handleClose}>Liked Posts</MenuItem>
+                <MenuItem onClick={handleClose}>Disliked Posts</MenuItem>
                 <MenuItem onClick={handleLogOut}>Logout</MenuItem>
               </Menu>
             </Grid>

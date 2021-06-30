@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { connect } from "react-redux";
 import BlogCard from "../../components/BlogCard/BlogCard";
@@ -32,6 +32,24 @@ const useStyles = makeStyles({
 });
 
 const Blogs = ({ state }) => {
+  const { data } = state;
+  const [searched, setSearched] = useState(false);
+  const [newData, setNewData] = useState(data);
+  const handleSearchChange = (e) => {
+    if (e.target.value === "" && searched === true) {
+      setSearched(false);
+    } else if (searched === false) {
+      setSearched(true);
+    }
+    setNewData(
+      data.filter(
+        (item) =>
+          item.body.search(e.target.value) != -1 ||
+          item.title.search(e.target.value) != -1
+      )
+    );
+  };
+
   const classes = useStyles();
   console.log(state);
   return (
@@ -43,16 +61,21 @@ const Blogs = ({ state }) => {
           id="outlined-basic"
           label="Search"
           variant="outlined"
+          onChange={handleSearchChange}
         />
       </Grid>
-      <Typography variant="h2" className={classes.trend_text}>
-        TRENDING
-      </Typography>
-      <Grid className={classes.trending} container>
-        <TrendCard />
-      </Grid>
+      {searched === false ? (
+        <Grid container>
+          <Typography variant="h2" className={classes.trend_text}>
+            TRENDING
+          </Typography>
+          <Grid className={classes.trending} container>
+            <TrendCard item={state.data[state.data.length - 1]} />
+          </Grid>
+        </Grid>
+      ) : null}
       <Grid className={classes.container} container>
-        {state.data.map((item) => (
+        {newData.map((item) => (
           <Grid key={item.id} className={classes.blogs} item>
             <BlogCard item={item} />
           </Grid>

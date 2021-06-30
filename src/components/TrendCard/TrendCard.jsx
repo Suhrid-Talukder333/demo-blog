@@ -13,6 +13,8 @@ import { red } from "@material-ui/core/colors";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import { connect } from "react-redux";
+import { postLiked, postDisliked } from "../../redux/mainReducer";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,24 +46,47 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TrendCard = () => {
+const TrendCard = ({ item, state, liked, disliked }) => {
+  const { userId, body, id, title } = item;
   const classes = useStyles();
 
+  const history = useHistory();
+  const handlePost = () => {
+    let path = `/post/${item.id}`;
+    history.push(path);
+  };
+
+  const handleLiked = (e) => {
+    let newLiked = [...state.liked[state.user.email], item.id];
+    let newDisliked = [...state.disliked[state.user.email]];
+    newDisliked = newDisliked.filter((entry) => entry != item.id);
+    liked({ ...state.liked, [state.user.email]: newLiked });
+    disliked({ ...state.disliked, [state.user.email]: newDisliked });
+  };
+  const handleDisliked = (e) => {
+    let newLiked = [...state.liked[state.user.email]];
+    let newDisliked = [...state.disliked[state.user.email], item.id];
+    newLiked = newLiked.filter((entry) => entry != item.id);
+    liked({ ...state.liked, [state.user.email]: newLiked });
+    disliked({ ...state.disliked, [state.user.email]: newDisliked });
+  };
+
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onClick={handlePost}>
       <CardHeader
+        style={{ textTransform: "capitalize", fontWeight: "bold" }}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            a
+            {state.users[userId].name[0].toUpperCase()}
           </Avatar>
         }
-        title="asdasdasdasd"
+        title={title}
       />
       <Grid className={classes.container} container>
         <CardMedia
           className={classes.media}
-          image={"https://source.unsplash.com/random/300"}
-          title="asdasdasdasd"
+          image={"https://source.unsplash.com/random/" + `${item.id}`}
+          title={title}
         />
         <CardContent className={classes.content}>
           <Typography
@@ -70,21 +95,27 @@ const TrendCard = () => {
             color="textSecondary"
             component="p"
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
-            blanditiis neque fugit enim possimus, ad, aut voluptate consequuntur
-            earum adipisci iste sunt necessitatibus nobis exercitationem
-            repellat. Esse quo maxime quis! Saepe mollitia adipisci cum, omnis
-            quas velit recusandae doloribus. Maxime illo dolorum doloribus et?
-            Repellat reiciendis optio exercitationem praesentium et sunt
-            obcaecati enim. Quae et temporibus necessitatibus aperiam. At.
+            {body}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to likes">
-            <ThumbUpIcon />
+          <IconButton aria-label="add to likes" onClick={handleLiked}>
+            <ThumbUpIcon
+              style={
+                state.liked[state.user.email].includes(item.id) === true
+                  ? { color: "blue" }
+                  : { color: "grey" }
+              }
+            />
           </IconButton>
-          <IconButton aria-label="add to dislikes">
-            <ThumbDownIcon />
+          <IconButton aria-label="add to dislikes" onClick={handleDisliked}>
+            <ThumbDownIcon
+              style={
+                state.disliked[state.user.email].includes(item.id) === true
+                  ? { color: "red" }
+                  : { color: "grey" }
+              }
+            />
           </IconButton>
         </CardActions>
       </Grid>
@@ -96,6 +127,11 @@ const mapStateToProps = (state) => {
   return { state };
 };
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    liked: (item) => dispatch(postLiked(item)),
+    disliked: (item) => dispatch(postDisliked(item)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TrendCard);

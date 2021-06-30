@@ -7,6 +7,8 @@ const SIGN_UP = "SIGN_UP";
 const GET_POSTS = "GET_POSTS";
 const GET_USERS = "GET_USERS";
 const SIGN_OUT = "SIGN_OUT";
+const LIKED = "LIKED";
+const DISLIKED = "DISLIKED";
 
 //Actions
 export const createPost = (item) => ({
@@ -40,6 +42,14 @@ export const signUp = (item) => ({
 export const signOut = () => ({
   type: SIGN_OUT,
 });
+export const postLiked = (item) => ({
+  type: LIKED,
+  payload: item,
+})
+export const postDisliked = (item) => ({
+  type: DISLIKED,
+  payload: item,
+})
 
 //state
 let initial_state;
@@ -51,6 +61,8 @@ if (localStorage.getItem("state")) {
     user: { name: "", email: "" },
     users: [],
     isLoggedIn: false,
+    liked:{},
+    disliked:{}
   };
 }
 
@@ -93,9 +105,12 @@ const reducer = (state = initial_state, action) => {
       return state;
     case SIGN_UP:
       state = init_state();
+      const{email} = action.payload;
       const newUsers = addNewUser(action.payload, state.users);
+      const newLiked = {...state.liked,[email]:[]};
+      const newDisliked = {...state.disliked,[email]:[]};
       console.log(newUsers, "newUsers");
-      state = { ...state, users: newUsers };
+      state = { ...state, users: newUsers, liked:newLiked, disliked: newDisliked };
       localStorage.setItem("state", JSON.stringify(state));
       return state;
     case SIGN_OUT:
@@ -104,6 +119,22 @@ const reducer = (state = initial_state, action) => {
         ...state,
         user: { name: "", email: "" },
         isLoggedIn: false,
+      };
+      localStorage.setItem("state", JSON.stringify(state));
+      return state;
+    case LIKED:
+      state = init_state();
+      state = {
+        ...state,
+        liked: {...action.payload},
+      };
+      localStorage.setItem("state", JSON.stringify(state));
+      return state;
+    case DISLIKED:
+      state = init_state();
+      state = {
+        ...state,
+        disliked: {...action.payload},
       };
       localStorage.setItem("state", JSON.stringify(state));
       return state;

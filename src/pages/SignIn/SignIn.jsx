@@ -76,6 +76,8 @@ function SignIn({ state, userSignIn, userSignUp, history }) {
     });
     if (!found) {
       userSignUp(credentials);
+      userSignIn(credentials);
+      window.location.href = "http://localhost:3000/blogs";
     }
   };
 

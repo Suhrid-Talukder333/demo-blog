@@ -9,6 +9,7 @@ import {
   Button,
 } from "@material-ui/core";
 import blogImg from "../../assets/blogging.svg";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   heroContainer: {
@@ -43,6 +44,10 @@ const useStyles = makeStyles({
 });
 
 const Home = ({ state }) => {
+  const history = useHistory();
+  if (state.isLoggedIn == true) {
+    history.push("/blogs");
+  }
   const classes = useStyles();
   return (
     <Grid container>
