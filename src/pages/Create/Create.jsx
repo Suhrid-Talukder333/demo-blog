@@ -54,7 +54,7 @@ const Create = ({ state, addPost }) => {
       userId,
     };
     addPost(newPost);
-    window.location.href = "http://localhost:3000/account";
+    window.location.href = "https://suhrid-blogin.netlify.app//account";
   };
 
   const classes = useStyles();

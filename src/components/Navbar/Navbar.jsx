@@ -43,12 +43,12 @@ const Navbar = ({ state, logOut }) => {
 
   const handleLogOut = () => {
     logOut();
-    window.location.href = "http://localhost:3000";
+    window.location.href = "https://suhrid-blogin.netlify.app/";
     handleClose();
   };
 
   const handleAccount = () => {
-    window.location.href = "http://localhost:3000/account";
+    window.location.href = "https://suhrid-blogin.netlify.app//account";
     handleClose();
   };
 
@@ -62,7 +62,7 @@ const Navbar = ({ state, logOut }) => {
         <Grid container className={classes.container}>
           <Grid item xs={8} className={classes.container}>
             <Button
-              href="http://localhost:3000"
+              href="https://suhrid-blogin.netlify.app/"
               style={{ fontSize: "2rem", letterSpacing: "3px" }}
               align="center"
             >
@@ -89,7 +89,7 @@ const Navbar = ({ state, logOut }) => {
           ) : (
             <Grid item>
               <Button
-                href="http://localhost:3000/create"
+                href="https://suhrid-blogin.netlify.app//create"
                 className={classes.buttonContainer}
                 variant="outlined"
               >
