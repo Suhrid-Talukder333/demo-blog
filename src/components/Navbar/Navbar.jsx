@@ -23,6 +23,8 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   buttonContainer: {
+    color: "black",
+    backgroundColor: "white",
     margin: "0px 5px",
     fontSize: "11px",
     "&:hover": {
@@ -45,6 +47,11 @@ const Navbar = ({ state, logOut }) => {
     handleClose();
   };
 
+  const handleAccount = () => {
+    window.location.href = "http://localhost:3000/account";
+    handleClose();
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -54,9 +61,13 @@ const Navbar = ({ state, logOut }) => {
       <Toolbar>
         <Grid container className={classes.container}>
           <Grid item xs={8} className={classes.container}>
-            <Typography style={{ fontSize: "2rem" }} align="center">
+            <Button
+              href="http://localhost:3000"
+              style={{ fontSize: "2rem", letterSpacing: "3px" }}
+              align="center"
+            >
               BlogIN
-            </Typography>
+            </Button>
           </Grid>
           {state.isLoggedIn === false ? (
             <Grid item xs={4} className={classes.container}>
@@ -65,7 +76,7 @@ const Navbar = ({ state, logOut }) => {
                 className={classes.buttonContainer}
                 variant="outlined"
               >
-                SignIn
+                Sign In
               </Button>
               {/* <Button
               href="/signin"
@@ -77,6 +88,9 @@ const Navbar = ({ state, logOut }) => {
             </Grid>
           ) : (
             <Grid item>
+              <Button className={classes.buttonContainer} variant="outlined">
+                Create Post
+              </Button>
               <Button style={{ color: "white" }}>
                 <AccountCircleIcon
                   style={{ width: "2rem", height: "2rem" }}
@@ -90,9 +104,7 @@ const Navbar = ({ state, logOut }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>My Posts</MenuItem>
-                <MenuItem onClick={handleClose}>Liked Post</MenuItem>
-                <MenuItem onClick={handleClose}>Disliked Post</MenuItem>
+                <MenuItem onClick={handleAccount}>My Account</MenuItem>
                 <MenuItem onClick={handleLogOut}>Logout</MenuItem>
               </Menu>
             </Grid>
