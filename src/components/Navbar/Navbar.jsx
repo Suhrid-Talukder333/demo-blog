@@ -88,7 +88,11 @@ const Navbar = ({ state, logOut }) => {
             </Grid>
           ) : (
             <Grid item>
-              <Button className={classes.buttonContainer} variant="outlined">
+              <Button
+                href="http://localhost:3000/create"
+                className={classes.buttonContainer}
+                variant="outlined"
+              >
                 Create Post
               </Button>
               <Button style={{ color: "white" }}>

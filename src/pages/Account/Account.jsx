@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -107,8 +108,8 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px",
   },
   avatar: {
-    width: "150px",
-    height: "150px",
+    width: "100px",
+    height: "100px",
     fontSize: "2rem",
   },
   container: {
@@ -129,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   addIcon: {
-    fontSize: "200px",
+    fontSize: "100px",
     color: "grey",
     "&:hover": {
       color: "black",
@@ -139,6 +140,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Account = ({ state, logOut }) => {
   const [iconClicked, setIconClicked] = useState("profile");
+  let currentUserId;
+  state.users.map((item) => {
+    if (item.name === state.user.name) {
+      currentUserId = item.id;
+    }
+  });
+  let userPosts = state.data.filter((item) => item.userId === currentUserId);
   let allItemsId = [
     ...state.liked[state.user.email],
     ...state.disliked[state.user.email],
@@ -156,6 +164,8 @@ const Account = ({ state, logOut }) => {
   } else if (iconClicked === "disliked") {
     items = dislikedItems;
   }
+
+  console.log(state);
 
   const handleLogOut = () => {
     logOut();
@@ -293,25 +303,53 @@ const Account = ({ state, logOut }) => {
               </Typography>
             </Grid>
             <Grid className={classes.container} item>
-              <Typography style={{ margin: "10px 0" }} variant="p">
+              <Typography style={{ margin: "10px 0" }} variant="h5">
                 {state.user.email}
               </Typography>
             </Grid>
             <Grid item>
-              <Card className={classes.card}>
+              <Card
+                className={classes.card}
+                onClick={() => {
+                  window.location.href = "http://localhost:3000/create";
+                }}
+              >
                 <ControlPointIcon className={classes.addIcon} />
               </Card>
             </Grid>
             <Typography style={{ margin: "10px 0" }} variant="h2">
               MY POSTS
             </Typography>
+            <Grid container>
+              {userPosts.map((item) => (
+                <Grid key={item.id} className={classes.item} item>
+                  <BlogCard item={item} />
+                  <Button
+                    onClick={() => {
+                      window.location.href =
+                        "http://localhost:3000/edit/" + `${item.id}`;
+                    }}
+                    style={{ margin: "10px" }}
+                    variant="contained"
+                  >
+                    edit
+                  </Button>
+                  <Button
+                    style={{ margin: "10px", backgroundColor: "red" }}
+                    variant="contained"
+                  >
+                    Delete
+                  </Button>
+                </Grid>
+              ))}
+            </Grid>
+            <Divider />
+            <Typography style={{ margin: "10px 10px" }} variant="h2">
+              OTHERS
+            </Typography>
             <Divider />
           </Grid>
         ) : null}
-        <Typography style={{ margin: "10px 10px" }} variant="h2">
-          OTHERS
-        </Typography>
-        <Divider />
         <Grid container>
           {items.map((item) => (
             <Grid key={item.id} className={classes.item} item>

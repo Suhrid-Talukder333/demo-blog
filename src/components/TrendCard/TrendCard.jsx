@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   outerContainer: {
     width: "80%",
+    height: "90%",
   },
   container: {
     display: "flex",
@@ -40,11 +41,13 @@ const useStyles = makeStyles((theme) => ({
     width: "50%",
     height: "400px",
   },
-  content: { width: "40%" },
+  content: { width: "30%", height: "90%" },
   avatar: {
     backgroundColor: red[500],
   },
   text: {
+    height: "90%",
+    overflowWrap: "break-word",
     overflow: "hidden",
   },
 }));
@@ -93,7 +96,7 @@ const TrendCard = ({ item, state, liked, disliked }) => {
         style={{ textTransform: "capitalize", fontWeight: "bold" }}
         avatar={
           <Avatar aria-label="profile" className={classes.avatar}>
-            {state.users[userId].name[0].toUpperCase()}
+            {state.users[userId - 1].name[0].toUpperCase()}
           </Avatar>
         }
         title={title}

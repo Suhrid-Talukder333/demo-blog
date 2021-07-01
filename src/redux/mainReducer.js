@@ -45,11 +45,11 @@ export const signOut = () => ({
 export const postLiked = (item) => ({
   type: LIKED,
   payload: item,
-})
+});
 export const postDisliked = (item) => ({
   type: DISLIKED,
   payload: item,
-})
+});
 
 //state
 let initial_state;
@@ -61,8 +61,8 @@ if (localStorage.getItem("state")) {
     user: { name: "", email: "" },
     users: [],
     isLoggedIn: false,
-    liked:{},
-    disliked:{}
+    liked: {},
+    disliked: {},
   };
 }
 
@@ -86,8 +86,16 @@ const addNewUser = (item, users) => {
 const reducer = (state = initial_state, action) => {
   switch (action.type) {
     case CREATE_POST:
+      state = init_state();
+      state.data.push(action.payload);
+      localStorage.setItem("state", JSON.stringify(state));
+      return state;
     case DELETE_POST:
     case UPDATE_POST:
+      state = init_state();
+      state = action.payload;
+      localStorage.setItem("state", JSON.stringify(state));
+      return state;
     case SIGN_IN:
       state = init_state();
       state = { ...state, user: { ...action.payload }, isLoggedIn: true };
@@ -105,12 +113,17 @@ const reducer = (state = initial_state, action) => {
       return state;
     case SIGN_UP:
       state = init_state();
-      const{email} = action.payload;
+      const { email } = action.payload;
       const newUsers = addNewUser(action.payload, state.users);
-      const newLiked = {...state.liked,[email]:[]};
-      const newDisliked = {...state.disliked,[email]:[]};
+      const newLiked = { ...state.liked, [email]: [] };
+      const newDisliked = { ...state.disliked, [email]: [] };
       console.log(newUsers, "newUsers");
-      state = { ...state, users: newUsers, liked:newLiked, disliked: newDisliked };
+      state = {
+        ...state,
+        users: newUsers,
+        liked: newLiked,
+        disliked: newDisliked,
+      };
       localStorage.setItem("state", JSON.stringify(state));
       return state;
     case SIGN_OUT:
@@ -126,7 +139,7 @@ const reducer = (state = initial_state, action) => {
       state = init_state();
       state = {
         ...state,
-        liked: {...action.payload},
+        liked: { ...action.payload },
       };
       localStorage.setItem("state", JSON.stringify(state));
       return state;
@@ -134,7 +147,7 @@ const reducer = (state = initial_state, action) => {
       state = init_state();
       state = {
         ...state,
-        disliked: {...action.payload},
+        disliked: { ...action.payload },
       };
       localStorage.setItem("state", JSON.stringify(state));
       return state;
