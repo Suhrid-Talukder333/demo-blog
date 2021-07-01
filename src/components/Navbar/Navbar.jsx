@@ -48,7 +48,7 @@ const Navbar = ({ state, logOut }) => {
   };
 
   const handleAccount = () => {
-    window.location.href = "https://suhrid-blogin.netlify.app//account";
+    window.location.href = "https://suhrid-blogin.netlify.app/account";
     handleClose();
   };
 
@@ -89,7 +89,7 @@ const Navbar = ({ state, logOut }) => {
           ) : (
             <Grid item>
               <Button
-                href="https://suhrid-blogin.netlify.app//create"
+                href="https://suhrid-blogin.netlify.app/create"
                 className={classes.buttonContainer}
                 variant="outlined"
               >

@@ -64,7 +64,7 @@ const Update = ({ state, editPost }) => {
     state.data = newData;
     console.log(state);
     editPost(state);
-    window.location.href = "https://suhrid-blogin.netlify.app//account";
+    window.location.href = "https://suhrid-blogin.netlify.app/account";
   };
 
   const classes = useStyles();

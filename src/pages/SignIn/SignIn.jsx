@@ -62,7 +62,7 @@ function SignIn({ state, userSignIn, userSignUp, history }) {
     state.users.map((user) => {
       if (user.name == credentials.name) {
         userSignIn(credentials);
-        window.location.href = "https://suhrid-blogin.netlify.app//blogs";
+        window.location.href = "https://suhrid-blogin.netlify.app/blogs";
       }
     });
     alert("User Not Found");
@@ -77,7 +77,7 @@ function SignIn({ state, userSignIn, userSignUp, history }) {
     if (!found) {
       userSignUp(credentials);
       userSignIn(credentials);
-      window.location.href = "https://suhrid-blogin.netlify.app//blogs";
+      window.location.href = "https://suhrid-blogin.netlify.app/blogs";
     }
   };
 

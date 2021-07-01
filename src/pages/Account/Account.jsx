@@ -172,13 +172,13 @@ const Account = ({ state, logOut, removePost }) => {
     window.location.href = "https://suhrid-blogin.netlify.app/";
   };
   const handleExplore = () => {
-    window.location.href = "https://suhrid-blogin.netlify.app//blogs";
+    window.location.href = "https://suhrid-blogin.netlify.app/blogs";
   };
   const handleDelete = (item) => {
     let newData = state.data.filter((entry) => entry.id !== item.id);
     state.data = newData;
     removePost(state);
-    window.location.href = "https://suhrid-blogin.netlify.app//account";
+    window.location.href = "https://suhrid-blogin.netlify.app/account";
   };
 
   const classes = useStyles();
@@ -317,7 +317,7 @@ const Account = ({ state, logOut, removePost }) => {
               <Card
                 className={classes.card}
                 onClick={() => {
-                  window.location.href = "https://suhrid-blogin.netlify.app//create";
+                  window.location.href = "https://suhrid-blogin.netlify.app/create";
                 }}
               >
                 <ControlPointIcon className={classes.addIcon} />
@@ -333,7 +333,7 @@ const Account = ({ state, logOut, removePost }) => {
                   <Button
                     onClick={() => {
                       window.location.href =
-                        "https://suhrid-blogin.netlify.app//edit/" + `${item.id}`;
+                        "https://suhrid-blogin.netlify.app/edit/" + `${item.id}`;
                     }}
                     style={{ margin: "10px" }}
                     variant="contained"
