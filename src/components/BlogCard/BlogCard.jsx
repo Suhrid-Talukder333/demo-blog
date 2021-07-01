@@ -17,7 +17,7 @@ import { postLiked, postDisliked } from "../../redux/mainReducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    width: 345,
     height: 450,
     backgroundColor: "transparent",
     border: "none",
@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: red[500],
   },
   text: {
+    height: "70px",
     overflow: "hidden",
   },
 }));
@@ -92,7 +93,7 @@ const BlogCard = ({ item, state, liked, disliked }) => {
         style={{ textTransform: "capitalize", fontWeight: "bold" }}
         avatar={
           <Avatar aria-label="profile" className={classes.avatar}>
-            {state.users[userId].name[0].toUpperCase()}
+            {state.users[userId - 1].name[0].toUpperCase()}
           </Avatar>
         }
         title={title}

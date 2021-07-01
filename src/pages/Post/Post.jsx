@@ -16,7 +16,6 @@ import { postLiked, postDisliked } from "../../redux/mainReducer";
 const useStyles = makeStyles({
   container: {
     width: "80vw",
-    height: "80vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -34,8 +33,10 @@ const useStyles = makeStyles({
     margin: "20px auto",
   },
   body: {
+    maxWidth: "800px",
     fontSize: "16px",
     margin: "10px auto",
+    overflowWrap: "break-word",
   },
 });
 

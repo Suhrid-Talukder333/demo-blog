@@ -4,6 +4,8 @@ import SignIn from "./pages/SignIn/SignIn";
 import Blogs from "./pages/Blogs/Blogs";
 import Post from "./pages/Post/Post";
 import Account from "./pages/Account/Account";
+import Create from "./pages/Create/Create";
+import Update from "./pages/Update/Update";
 import { Switch, Route } from "react-router-dom";
 
 function App() {
@@ -23,6 +25,12 @@ function App() {
       </Route>
       <Route path="/account">
         <Account />
+      </Route>
+      <Route path="/create">
+        <Create />
+      </Route>
+      <Route path="/edit/:itemid">
+        <Update />
       </Route>
     </Switch>
   );
