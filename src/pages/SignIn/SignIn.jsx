@@ -59,14 +59,17 @@ function SignIn({ state, userSignIn, userSignUp, history }) {
 
   //login and sign in submition handlers
   const handleSignIn = () => {
+    let found = false;
     state.users.map((user) => {
       if (user.name == credentials.name) {
         userSignIn(credentials);
+        found = true;
         window.location.href = "https://suhrid-blogin.netlify.app/blogs";
-        return;
       }
     });
-    alert("User Not Found");
+    if (found === false) {
+      alert("User Not Found");
+    }
   };
   const handleSignUp = () => {
     let found = false;
