@@ -63,6 +63,7 @@ function SignIn({ state, userSignIn, userSignUp, history }) {
       if (user.name == credentials.name) {
         userSignIn(credentials);
         window.location.href = "https://suhrid-blogin.netlify.app/blogs";
+        return;
       }
     });
     alert("User Not Found");
