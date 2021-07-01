@@ -44,8 +44,8 @@ const Blogs = ({ state }) => {
     setNewData(
       data.filter(
         (item) =>
-          item.body.search(e.target.value) != -1 ||
-          item.title.search(e.target.value) != -1
+          item.body.toLowerCase().search(e.target.value.toLowerCase()) != -1 ||
+          item.title.toLowerCase().search(e.target.value.toLowerCase()) != -1
       )
     );
   };

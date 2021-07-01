@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     },
     padding: "10px 10px",
   },
+  outerContainer: {
+    width: "80%",
+  },
   container: {
     display: "flex",
     justifyContent: "left",
@@ -57,7 +60,13 @@ const TrendCard = ({ item, state, liked, disliked }) => {
   };
 
   const handleLiked = (e) => {
-    let newLiked = [...state.liked[state.user.email], item.id];
+    // let newLiked = [...state.liked[state.user.email], item.id];
+    let newLiked = [...state.liked[state.user.email]];
+    if (newLiked.includes(item.id)) {
+      newLiked = newLiked.filter((entry) => entry != item.id);
+    } else {
+      newLiked = [...newLiked, item.id];
+    }
     let newDisliked = [...state.disliked[state.user.email]];
     newDisliked = newDisliked.filter((entry) => entry != item.id);
     liked({ ...state.liked, [state.user.email]: newLiked });
@@ -65,18 +74,25 @@ const TrendCard = ({ item, state, liked, disliked }) => {
   };
   const handleDisliked = (e) => {
     let newLiked = [...state.liked[state.user.email]];
-    let newDisliked = [...state.disliked[state.user.email], item.id];
+    // let newDisliked = [...state.disliked[state.user.email], item.id];
+    let newDisliked = [...state.disliked[state.user.email]];
+    if (newDisliked.includes(item.id)) {
+      newDisliked = newDisliked.filter((entry) => entry != item.id);
+    } else {
+      newDisliked = [...newDisliked, item.id];
+    }
     newLiked = newLiked.filter((entry) => entry != item.id);
     liked({ ...state.liked, [state.user.email]: newLiked });
     disliked({ ...state.disliked, [state.user.email]: newDisliked });
   };
 
   return (
-    <Card className={classes.root} onClick={handlePost}>
+    <Card className={classes.root}>
       <CardHeader
+        onClick={handlePost}
         style={{ textTransform: "capitalize", fontWeight: "bold" }}
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <Avatar aria-label="profile" className={classes.avatar}>
             {state.users[userId].name[0].toUpperCase()}
           </Avatar>
         }
@@ -84,11 +100,12 @@ const TrendCard = ({ item, state, liked, disliked }) => {
       />
       <Grid className={classes.container} container>
         <CardMedia
+          onClick={handlePost}
           className={classes.media}
           image={"https://source.unsplash.com/random/" + `${item.id}`}
           title={title}
         />
-        <CardContent className={classes.content}>
+        <CardContent className={classes.content} onClick={handlePost}>
           <Typography
             className={classes.text}
             variant="body2"
