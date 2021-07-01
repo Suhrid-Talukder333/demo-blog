@@ -23,7 +23,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ExploreIcon from "@material-ui/icons/Explore";
 import { connect } from "react-redux";
-import { signOut } from "../../redux/mainReducer";
+import { signOut, deletePost } from "../../redux/mainReducer";
 import BlogCard from "../../components/BlogCard/BlogCard";
 import ControlPointIcon from "@material-ui/icons/ControlPoint";
 
@@ -138,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Account = ({ state, logOut }) => {
+const Account = ({ state, logOut, removePost }) => {
   const [iconClicked, setIconClicked] = useState("profile");
   let currentUserId;
   state.users.map((item) => {
@@ -173,6 +173,12 @@ const Account = ({ state, logOut }) => {
   };
   const handleExplore = () => {
     window.location.href = "http://localhost:3000/blogs";
+  };
+  const handleDelete = (item) => {
+    let newData = state.data.filter((entry) => entry.id !== item.id);
+    state.data = newData;
+    removePost(state);
+    window.location.href = "http://localhost:3000/account";
   };
 
   const classes = useStyles();
@@ -335,6 +341,7 @@ const Account = ({ state, logOut }) => {
                     edit
                   </Button>
                   <Button
+                    onClick={() => handleDelete(item)}
                     style={{ margin: "10px", backgroundColor: "red" }}
                     variant="contained"
                   >
@@ -369,6 +376,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logOut: () => dispatch(signOut()),
+    removePost: (item) => dispatch(deletePost(item)),
   };
 };
 

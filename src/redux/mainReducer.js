@@ -91,6 +91,10 @@ const reducer = (state = initial_state, action) => {
       localStorage.setItem("state", JSON.stringify(state));
       return state;
     case DELETE_POST:
+      state = init_state();
+      state = action.payload;
+      localStorage.setItem("state", JSON.stringify(state));
+      return state;
     case UPDATE_POST:
       state = init_state();
       state = action.payload;
